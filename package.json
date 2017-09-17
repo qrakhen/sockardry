@@ -1,0 +1,32 @@
+{
+  "name": "sockardry",
+  "version": "0.0.1",
+  "description": "simple and useful web socket library based on socket.io, adding lots useful features, such as self-managed and request-specific callbacks and built-in error handling,",
+  "main": "test.js",
+  "scripts": {
+    "doc": "jsdoc -d doc/ -r loader.js src/ README.md",
+    "dev": "nodemon loader.js -e js,json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qrakhen/sockardry.git"
+  },
+  "keywords": [
+    "socket.io",
+    "web",
+    "sockets",
+    "net",
+    "tcp"
+  ],
+  "author": "Sygade Studios <dave@sygade.eu> (http://sygade.eu)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/qrakhen/sockardry/issues"
+  },
+  "homepage": "https://github.com/qrakhen/sockardry#readme",
+  "dependencies": {
+    "express": "^4.15.4",
+    "socket.io": "^2.0.3",
+    "uuid": "^3.1.0"
+  }
+}
