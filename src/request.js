@@ -17,7 +17,7 @@ const Request = function(socket) {
         body.rqid = uuid();
         this.__pending[body.rqid] = this.__hook();
         this.__socket.emit(subject, body);
-        this.__socket.on(subject + '_' + body.rqid, this.__on);
+        this.__socket.on(body.rqid, this.__on);
         return this.__pending[body.rqid];
     };
     /**

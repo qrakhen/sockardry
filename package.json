@@ -2,7 +2,7 @@
   "name": "sockardry",
   "version": "0.0.1",
   "description": "simple and useful web socket library based on socket.io, adding lots useful features, such as self-managed and request-specific callbacks and built-in error handling,",
-  "main": "test.js",
+  "main": "loader.js",
   "scripts": {
     "doc": "jsdoc -d doc/ -r loader.js src/ README.md",
     "dev": "nodemon loader.js -e js,json"
@@ -25,7 +25,6 @@
   },
   "homepage": "https://github.com/qrakhen/sockardry#readme",
   "dependencies": {
-    "express": "^4.15.4",
     "socket.io": "^2.0.3",
     "uuid": "^3.1.0"
   }
