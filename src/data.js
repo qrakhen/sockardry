@@ -20,16 +20,39 @@ Data.Message = function(subject, body) {
  * @param {Object} object object to be processed
  * @param {boolean} recursive whether the object should recurse down into member objects
  * @param {boolean} ignorePrefix ifnores all members with given prefix (e.g. __privateMembers with '__') */
-Data.getPublicData = function(object, recursive = true, ignorePrefix = '__') {
+Data.getPublicData = function(object, recursive = true, ignorePrefix = '__', ignoreKeys = []) {
     var data = {};
     for (key in object) {
-        if (key.indexOf(ignorePrefix) === 0) continue;
+        if (ignorePrefix && key.indexOf(ignorePrefix) === 0) continue;
+        if (ignoreKeys && ignoreKeys.indexOf(key) > -1) continue;
         if (typeof object[key] === 'function') continue;
         var v = object[key];
-        if (typeof v === 'string' || typeof v === 'number') data[key] = v;
-        else if (typeof v === 'object' && recursive) data[key] = (v ? Data.getPublicData(v, true, ignorePrefix) : null);
+        if (typeof v !== 'object') data[key] = v;
+        else if (typeof v === 'object' && recursive) data[key] = (v ? Data.getPublicData(v, true, ignorePrefix, ignoreKeys) : null);
     }
     return data;
+};
+
+/**
+ * extracts all 'public' properties from an object, recursively per default.
+ * private properties can either be defined by having the same prefix (i.e. '__privateProperty')
+ * or by providing all key names that should be ignored.
+ * can also be combined, in case it is needed to also hide some public properties.
+ * @param {boolean} r Recursive, if true, will go through all child objects
+ * @param {string} p PrivatePrefix, string to detect private properties by their key names (i.e. '__' for '__privateProp'). a falsey value will disable this check.
+ * @param {array} i IgnoredKeys, array of strings standing for keys that will be ignored (i.e. [ 'internalId', 'hugeChildObjectWeDontNeedAndThusIgnore' ])
+ * @returns {Object} extracted data object */
+Object.prototype.extract = function(r, p, i) {
+	var d = {};
+    for(k in this) {
+        var v = this[k];
+        if ((p && k.indexOf(p) == 0) ||
+            (i && i.indexOf(k) > -1) ||
+            typeof v == 'function') continue;
+        if (typeof v == 'object' && r) d[k] = __.extract(r, p);
+        else d[k] = v;
+    }
+    return d;
 };
 
 /**
